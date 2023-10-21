@@ -20,22 +20,25 @@ public class PersonDAO {
 	}
 
 	public List<Person> getAll() {
-		return jdbcTemplate.query("SELECT * FROM Person", new BeanPropertyRowMapper(Person.class));
+		return jdbcTemplate.query("SELECT * FROM Person", new BeanPropertyRowMapper<Person>(Person.class));
 	}
 	
 	public List<Book> getBooksByPersonId(int id) {
-		return jdbcTemplate.query("SELECT * FROM Book WHERE person_id=?", new Object[] { id },
-				new BeanPropertyRowMapper(Book.class));
+		String sql = "SELECT * FROM Book WHERE person_id=?";
+		return jdbcTemplate.query(sql, new Object[] { id },
+				new BeanPropertyRowMapper<Book>(Book.class));
 	}
 
 	public Person getByFIO(String fio) {
-		return (Person) jdbcTemplate.query("SELECT * FROM Person WHERE fio=?", new Object[] { fio },
-				new BeanPropertyRowMapper(Person.class)).stream().findAny().orElse(null);
+		String sql = "SELECT * FROM Person WHERE fio=?";
+		return (Person) jdbcTemplate.query(sql, new Object[] { fio },
+				new BeanPropertyRowMapper<Person>(Person.class)).stream().findAny().orElse(null);
 	}
 
 	public Person getById(Integer id) {
+		String sql = "SELECT * FROM Person WHERE id=?";
 		return (Person) jdbcTemplate
-				.query("SELECT * FROM Person WHERE id=?", new Object[] { id }, new BeanPropertyRowMapper(Person.class))
+				.query(sql, new Object[] { id }, new BeanPropertyRowMapper<Person>(Person.class))
 				.stream().findAny().orElse(null);
 	}
 

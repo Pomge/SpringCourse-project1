@@ -20,23 +20,25 @@ public class BookDAO {
 	}
 
 	public List<Book> getAll() {
-		BeanPropertyRowMapper beanPropertyRowMapper = new BeanPropertyRowMapper(Book.class);
+		BeanPropertyRowMapper<Book> beanPropertyRowMapper = new BeanPropertyRowMapper<Book>(Book.class);
 		beanPropertyRowMapper.setPrimitivesDefaultedForNullValue(true);
 		return jdbcTemplate.query("SELECT * FROM Book", beanPropertyRowMapper);
 	}
 
 	public Book getById(int id) {
-		BeanPropertyRowMapper beanPropertyRowMapper = new BeanPropertyRowMapper(Book.class);
+		BeanPropertyRowMapper<Book> beanPropertyRowMapper = new BeanPropertyRowMapper<Book>(Book.class);
 		beanPropertyRowMapper.setPrimitivesDefaultedForNullValue(true);
-		return (Book) jdbcTemplate.query("SELECT * FROM Book WHERE id=?", new Object[] { id }, beanPropertyRowMapper)
-				.stream().findAny().orElse(null);
+		String sql = "SELECT * FROM Book WHERE id=?";
+		return (Book) jdbcTemplate.query(sql, new Object[] { id }, beanPropertyRowMapper).stream().findAny()
+				.orElse(null);
 	}
 
 	public Person getOwnerById(int id) {
-		BeanPropertyRowMapper beanPropertyRowMapper = new BeanPropertyRowMapper(Person.class);
+		BeanPropertyRowMapper<Person> beanPropertyRowMapper = new BeanPropertyRowMapper<Person>(Person.class);
 		beanPropertyRowMapper.setPrimitivesDefaultedForNullValue(true);
-		return (Person) jdbcTemplate.query("SELECT Person.* FROM Book JOIN Person ON Book.person_id = Person.id WHERE Book.id=?", new Object[] { id },
-				beanPropertyRowMapper).stream().findAny().orElse(null);
+		String sql = "SELECT Person.* FROM Book JOIN Person ON Book.person_id = Person.id WHERE Book.id=?";
+		return (Person) jdbcTemplate.query(sql, new Object[] { id }, beanPropertyRowMapper).stream().findAny()
+				.orElse(null);
 	}
 
 	public void create(Book book) {
@@ -52,7 +54,7 @@ public class BookDAO {
 	public void freePersonId(int id) {
 		jdbcTemplate.update("UPDATE Book SET person_id=NULL WHERE id=?", id);
 	}
-	
+
 	public void setPersonId(int id, Integer person_id) {
 		jdbcTemplate.update("UPDATE Book SET person_id=? WHERE id=?", person_id, id);
 	}
