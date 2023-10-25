@@ -31,7 +31,7 @@ My realisation of 'Project №1' from the [Spring Course](https://swiftbook.org/
 ## Страница книги
 ### Свободная книга
 ![9](https://github.com/Pomge/SpringCourse-project1/assets/33260275/ad6b110b-f56a-4ead-86ba-f2d3509783b7)
-### Выподающий список
+### Выпадающий список
 ![10](https://github.com/Pomge/SpringCourse-project1/assets/33260275/efadb6f5-6f91-4f64-a538-0eece314db30)
 ### Назначенная книга
 ![11](https://github.com/Pomge/SpringCourse-project1/assets/33260275/01a84a80-2529-441d-996c-ad5e6c55ae12)
